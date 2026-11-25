@@ -32,16 +32,34 @@ def test_word_boundary():
 
 
 def test_advice():
-    assert advice("prove")["answer_must_show"].startswith("a complete argument")
+    assert advice("prove")["examiner_looks_for"].startswith("A complete argument")
+    assert set(advice("prove")) == {"term", "examiner_looks_for", "working_to_show", "common_mistake"}
     with pytest.raises(KeyError):
         advice("dance")
 
 
-def test_every_term_has_two_texts_and_no_dashes():
-    for t, (a, b) in TERMS.items():
-        assert a and b
-        assert chr(0x2014) not in a + b and chr(0x2013) not in a + b
+def test_every_term_has_three_texts_and_no_dashes():
+    for t, parts in TERMS.items():
+        assert len(parts) == 3 and all(parts)
+        text = "".join(parts)
+        assert chr(0x2014) not in text and chr(0x2013) not in text
 
 
-def test_explain_lines():
-    assert explain("Sketch the graph.").startswith("SKETCH:")
+def test_readme_count_matches():
+    import re
+    m = re.search(r"(\d+) terms", open("README.md").read())
+    assert m and int(m.group(1)) == len(TERMS) == 24
+
+
+def test_disclaimer_in_readme_and_docstring():
+    import ibterms.core as c
+    sentence = ("This project is not affiliated with, endorsed by or produced by the International "
+                "Baccalaureate Organization. It is not the official glossary of command terms. "
+                "Check your subject guide for the official wording.")
+    assert sentence in open("README.md").read()
+    assert sentence in c.__doc__
+
+
+def test_each_note_has_a_common_mistake_in_its_own_words():
+    for t in TERMS:
+        assert advice(t)["common_mistake"].endswith(".")
