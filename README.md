@@ -1,4 +1,6 @@
-# ib-command-terms
+# CIPHER: Command words Interpreted for Precise, High-scoring Exam Responses
+
+Formerly `ib-command-terms`.
 
 This project is not affiliated with, endorsed by or produced by the International Baccalaureate Organization. It is not the official glossary of command terms. Check your subject guide for the official wording.
 
