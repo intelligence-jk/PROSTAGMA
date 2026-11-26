@@ -1,4 +1,4 @@
-# CIPHER: Command words Interpreted for Precise, High-scoring Exam Responses
+# PROSTAGMA: Greek for a command or order
 
 Formerly `ib-command-terms`.
 
